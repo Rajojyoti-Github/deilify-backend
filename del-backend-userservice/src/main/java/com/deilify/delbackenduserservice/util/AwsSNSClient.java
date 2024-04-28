@@ -1,4 +1,4 @@
-package com.deilify.delbackendvendorservice.util;
+package com.deilify.delbackenduserservice.util;
 
 import java.util.HashMap;
 import java.util.Map;

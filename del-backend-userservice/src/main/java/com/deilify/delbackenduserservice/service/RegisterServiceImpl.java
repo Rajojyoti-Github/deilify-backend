@@ -6,15 +6,20 @@ import org.springframework.stereotype.Service;
 
 
 import com.deilify.delbackenduserservice.dao.UserCreateDao;
+import com.deilify.delbackenduserservice.dto.SampleKafkaDto;
 import com.deilify.delbackenduserservice.dto.UserCreateDTO;
 import com.deilify.delbackenduserservice.dto.UserDTO;
 import com.deilify.delbackenduserservice.entity.UserEntity;
+import com.deilify.delbackenduserservice.kafka.UserKafkaProducer;
 
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
 	@Autowired
 	UserCreateDao userCreateDao;
+	
+	@Autowired
+	UserKafkaProducer userKafkaProducer;
 
 	public UserCreateDTO createUser(UserDTO user) {
 		if (user.getUsername() != null) {
@@ -31,6 +36,12 @@ public class RegisterServiceImpl implements RegisterService {
 				userEntity.setModifiedBy("System");
 
 				userCreateDao.save(userEntity);
+				SampleKafkaDto sampleKafkaDto = new SampleKafkaDto();
+				sampleKafkaDto.setName("Rajojyoti");
+				sampleKafkaDto.setMobileNumber("8013341617");
+				sampleKafkaDto.setEmailAddress("rajojyoti87@gmail.com");
+				
+				userKafkaProducer.messageBuilder(sampleKafkaDto);
 				System.out.println("User has been successfully registered");
 				return mapUserToDto(user);
 			} else {

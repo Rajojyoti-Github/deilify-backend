@@ -19,6 +19,7 @@
         <module>del-backend-userservice</module>
         <module>del-backend-vendorservice</module>
         <module>del-backend-deliveryservice</module>
+        <module>del-backend-ordermanagementservice</module>
     </modules>
 
 </project>

@@ -23,6 +23,19 @@ services:
       - mysql
     networks:
       - backend
+      
+  odermanagementservice:
+    build: ./del-backend-ordermanagementservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/deilify
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8084:8084"
+    depends_on:
+      - mysql
+    networks:
+      - backend
 
 networks:
   backend:

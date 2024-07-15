@@ -13,7 +13,7 @@ import com.deilify.delbackenduserservice.entity.UserEntity;
 import com.deilify.delbackenduserservice.kafka.UserKafkaProducer;
 
 @Service
-public class RegisterServiceImpl implements RegisterService {
+public class UserRegisterServiceImpl implements UserRegisterService {
 
 	@Autowired
 	UserCreateDao userCreateDao;

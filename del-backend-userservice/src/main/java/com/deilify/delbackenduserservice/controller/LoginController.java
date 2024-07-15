@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.deilify.delbackenduserservice.dto.UserDTO;
-import com.deilify.delbackenduserservice.service.RegisterService;
+import com.deilify.delbackenduserservice.service.UserRegisterService;
 
 @RestController
 @RequestMapping(value = "/api")

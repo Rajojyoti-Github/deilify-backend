@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.deilify.delbackenduserservice.dto.UserCreateDTO;
 import com.deilify.delbackenduserservice.dto.UserDTO;
-import com.deilify.delbackenduserservice.service.RegisterService;
+import com.deilify.delbackenduserservice.service.UserRegisterService;
 
 @RestController
 @RequestMapping(value = "/api")
 public class UserController {
 	
 	@Autowired
-	RegisterService registerService;
+	UserRegisterService registerService;
 	
 	@PostMapping(value = "/registerUser")
 	public ResponseEntity<UserCreateDTO> registerUser (@RequestBody UserDTO user ){

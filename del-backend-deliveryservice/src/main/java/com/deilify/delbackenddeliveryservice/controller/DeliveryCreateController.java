@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.deilify.delbackenddeliveryservice.dto.DeliveryCreateDTO;
 import com.deilify.delbackenddeliveryservice.dto.DeliveryDTO;
-import com.deilify.delbackenddeliveryservice.service.RegisterService;
+import com.deilify.delbackenddeliveryservice.service.DeliveryRegisterService;
 
 @RestController
 @RequestMapping(value = "/api")
 public class DeliveryCreateController {
 	
 	@Autowired
-	RegisterService registerService;
+	DeliveryRegisterService registerService;
 	
 	@PostMapping(value = "/registerDelivery")
 	public ResponseEntity<DeliveryCreateDTO> registerDelivery (@RequestBody DeliveryDTO user ){

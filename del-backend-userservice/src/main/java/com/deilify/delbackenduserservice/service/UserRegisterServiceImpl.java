@@ -1,16 +1,20 @@
 package com.deilify.delbackenduserservice.service;
 
 import java.time.LocalDate;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import com.deilify.delbackenduserservice.dao.UserCreateDao;
+import com.deilify.delbackenduserservice.dto.RegisterMobileDTO;
 import com.deilify.delbackenduserservice.dto.SampleKafkaDto;
 import com.deilify.delbackenduserservice.dto.UserCreateDTO;
 import com.deilify.delbackenduserservice.dto.UserDTO;
 import com.deilify.delbackenduserservice.entity.UserEntity;
 import com.deilify.delbackenduserservice.kafka.UserKafkaProducer;
+import com.deilify.delbackenduserservice.util.AwsSNSClient;
 
 @Service
 public class UserRegisterServiceImpl implements UserRegisterService {
@@ -20,6 +24,9 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 	
 	@Autowired
 	UserKafkaProducer userKafkaProducer;
+	
+	@Autowired
+	AwsSNSClient awsSNSClient;
 
 	public UserCreateDTO createUser(UserDTO user) {
 		if (user.getUsername() != null) {
@@ -125,6 +132,29 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 			isEmpty = true;
 		}
 		return isEmpty;
+	}
+	
+	@Override
+	public RegisterMobileDTO registerMobile(RegisterMobileDTO dto) {
+		if(dto != null) {
+			UserEntity getUser = userCreateDao.findByUserName(dto.getMobileNumber());
+			if(getUser == null) {
+				UserEntity entity = new UserEntity();
+				if(!isBlankNullEmpty(dto.getMobileNumber())) {
+					entity.setMobileNumber(dto.getMobileNumber());
+				}
+				userCreateDao.save(entity);
+				Boolean success = awsSNSClient.subscribeMobile(dto.getMobileNumber());
+				if(success) {
+					Random random = new Random();
+					String id = String.format("%04d", random.nextInt(10000));
+					Integer otp = Integer.valueOf(id);
+					String message = "Otp for to Login to Deilify " + dto.getMobileNumber() + " is " + otp;
+					awsSNSClient.publishMessageToSNSTopic(message, dto.getMobileNumber());
+				}
+			}
+		}
+		return null;
 	}
 
 }

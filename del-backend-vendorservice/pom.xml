@@ -9,13 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.deilify</groupId>
-	<artifactId>del-backend-userservice</artifactId>
+	<artifactId>del-backend-vendorservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>del-backend-userservice</name>
-	<description>Demo project for Spring Boot userservice</description>
-	<properties>
-		<java.version>17</java.version>
-	</properties>
+	<name>del-backend-vendorservice</name>
+	<description>Demo project for Spring Boot vendorservice</description>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

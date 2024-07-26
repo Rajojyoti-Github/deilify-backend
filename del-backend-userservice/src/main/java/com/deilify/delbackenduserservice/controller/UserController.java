@@ -9,16 +9,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.deilify.delbackenduserservice.dto.RegisterMobileDTO;
 import com.deilify.delbackenduserservice.dto.UserCreateDTO;
 import com.deilify.delbackenduserservice.dto.UserDTO;
-import com.deilify.delbackenduserservice.service.RegisterService;
+import com.deilify.delbackenduserservice.service.UserRegisterService;
 
 @RestController
 @RequestMapping(value = "/api")
 public class UserController {
 	
 	@Autowired
-	RegisterService registerService;
+	UserRegisterService registerService;
 	
 	@PostMapping(value = "/registerUser")
 	public ResponseEntity<UserCreateDTO> registerUser (@RequestBody UserDTO user ){
@@ -30,6 +31,11 @@ public class UserController {
 	public ResponseEntity<UserCreateDTO> updateUser (@RequestBody UserDTO user ){
 		return new ResponseEntity<>(registerService.updateUser(user), HttpStatus.OK);
 		
+	}
+	
+	@PostMapping(value = "/registerMobileNumber")
+	public ResponseEntity<RegisterMobileDTO> registerMobile(@RequestBody RegisterMobileDTO dto){
+		return new ResponseEntity<>(registerService.registerMobile(dto), HttpStatus.OK);
 	}
 
 }

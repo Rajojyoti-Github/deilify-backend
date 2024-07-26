@@ -11,7 +11,7 @@ import com.deilify.delbackenddeliveryservice.dto.DeliveryDTO;
 import com.deilify.delbackenddeliveryservice.entity.DeliveryEntity;
 
 @Service
-public class RegisterServiceImpl implements RegisterService {
+public class DeliveryRegisterServiceImpl implements DeliveryRegisterService {
 
 	@Autowired
 	DeliveryCreateDao DeliveryCreateDao;

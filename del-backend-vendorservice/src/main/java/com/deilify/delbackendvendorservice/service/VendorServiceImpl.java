@@ -3,15 +3,20 @@ package com.deilify.delbackendvendorservice.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.deilify.delbackendvendorservice.dao.ServicesDao;
 import com.deilify.delbackendvendorservice.dao.VendorCreateDao;
 import com.deilify.delbackendvendorservice.dao.VendorPaymentDao;
 import com.deilify.delbackendvendorservice.dto.BankAccountDTO;
+import com.deilify.delbackendvendorservice.dto.SearchCriteria;
 import com.deilify.delbackendvendorservice.dto.ServicesCreateDTO;
 import com.deilify.delbackendvendorservice.dto.ServicesDTO;
 import com.deilify.delbackendvendorservice.dto.VendorCreateDTO;
@@ -20,6 +25,7 @@ import com.deilify.delbackendvendorservice.dto.VendorBankAccountDTO;
 import com.deilify.delbackendvendorservice.entity.ServicesEntity;
 import com.deilify.delbackendvendorservice.entity.VendorEntity;
 import com.deilify.delbackendvendorservice.entity.VendorPaymentEntity;
+import com.deilify.delbackendvendorservice.exception.VendorNotFoundException;
 
 @Service
 public class VendorServiceImpl implements VendorService {
@@ -224,5 +230,72 @@ public class VendorServiceImpl implements VendorService {
 		
 		return servicesDto;
 	}
+	
+	@Override
+    public List<ServicesCreateDTO> getServicesByVendorId(Integer vendorId) {
+        List<ServicesEntity> servicesEntities = servicesDao.findByVendorId(vendorId);
+        return servicesEntities.stream().map(this::getMapVendorToDto).collect(Collectors.toList());
+    }
+
+    private ServicesCreateDTO getMapVendorToDto(ServicesEntity servicesEntity) {
+        ServicesCreateDTO servicesDto = new ServicesCreateDTO();
+        
+        servicesDto.setId(servicesEntity.getId());
+        servicesDto.setVendorId(servicesEntity.getVendorId());
+        servicesDto.setNameOfVendor(servicesEntity.getNameOfVendor());
+        servicesDto.setCategory(Arrays.stream(servicesEntity.getCategory().split(",")).collect(Collectors.toList()));
+        servicesDto.setVendorStoreId(servicesEntity.getVendorStoreId());
+        servicesDto.setSubCategory(Arrays.stream(servicesEntity.getSubCategory().split(",")).collect(Collectors.toList()));
+        servicesDto.setServiceLine(Arrays.stream(servicesEntity.getServiceLine().split(",")).collect(Collectors.toList()));
+        servicesDto.setPrice(servicesEntity.getPrice());
+        servicesDto.setCreatedTimestamp(servicesEntity.getCreatedTimestamp());
+        servicesDto.setUpdatedTimestamp(servicesEntity.getUpdatedTimestamp());
+        
+        return servicesDto;
+    }
+    
+    @Override
+    public void deleteVendorById(Integer id) {
+    	ServicesEntity servicesEntities = servicesDao.findById(id).orElseThrow(() -> new VendorNotFoundException("Vendor not found with id: " + id));
+    	servicesDao.delete(servicesEntities);
+        System.out.println("Vendor with id " + id + " has been successfully deleted");
+    }
+    
+    
+    @Override
+    public Page<ServicesCreateDTO> searchServices(SearchCriteria searchCriteria, Pageable pageable) {
+        List<ServicesEntity> filteredServices = servicesDao.findAll().stream()
+            .filter(service -> serviceMatchesCriteria(service, searchCriteria.getServices()))
+            .collect(Collectors.toList());
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filteredServices.size());
+        List<ServicesCreateDTO> paginatedList = filteredServices.subList(start, end).stream()
+            .map(service -> convertToDto(service))
+            .collect(Collectors.toList());
+
+        return new PageImpl<>(paginatedList, pageable, filteredServices.size());
+    }
+
+    private boolean serviceMatchesCriteria(ServicesEntity service, List<ServicesDTO> services) {
+		return true;
+	}
+
+    private ServicesCreateDTO convertToDto(ServicesEntity servicesEntity) {
+        ServicesCreateDTO servicesDto = new ServicesCreateDTO();
+        
+        servicesDto.setId(servicesEntity.getId());
+        servicesDto.setVendorId(servicesEntity.getVendorId());
+        servicesDto.setNameOfVendor(servicesEntity.getNameOfVendor());
+        servicesDto.setCategory(Arrays.stream(servicesEntity.getCategory().split(",")).collect(Collectors.toList()));
+        servicesDto.setVendorStoreId(servicesEntity.getVendorStoreId());
+        servicesDto.setSubCategory(Arrays.stream(servicesEntity.getSubCategory().split(",")).collect(Collectors.toList()));
+        servicesDto.setServiceLine(Arrays.stream(servicesEntity.getServiceLine().split(",")).collect(Collectors.toList()));
+        servicesDto.setPrice(servicesEntity.getPrice());
+        servicesDto.setCreatedTimestamp(servicesEntity.getCreatedTimestamp());
+        servicesDto.setUpdatedTimestamp(servicesEntity.getUpdatedTimestamp());
+        
+        return servicesDto;
+    }
 
 }

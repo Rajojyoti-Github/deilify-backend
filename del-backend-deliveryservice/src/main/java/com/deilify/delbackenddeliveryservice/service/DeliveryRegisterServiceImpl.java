@@ -1,13 +1,21 @@
 package com.deilify.delbackenddeliveryservice.service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.deilify.delbackenddeliveryservice.dao.DeliveryCreateDao;
 import com.deilify.delbackenddeliveryservice.dto.DeliveryCreateDTO;
 import com.deilify.delbackenddeliveryservice.dto.DeliveryDTO;
+import com.deilify.delbackenddeliveryservice.dto.SearchRequest;
 import com.deilify.delbackenddeliveryservice.entity.DeliveryEntity;
 
 @Service
@@ -116,4 +124,51 @@ public class DeliveryRegisterServiceImpl implements DeliveryRegisterService {
 		return isEmpty;
 	}
 
+	@Override
+	public List<DeliveryCreateDTO> getDeliveryById(Integer Id) {
+		Optional<DeliveryEntity> deliveryEntities = DeliveryCreateDao.findById(Id);
+		return deliveryEntities.stream().map(this::getMapDeliveryToDto).collect(Collectors.toList());
+	}
+
+	
+	 private DeliveryCreateDTO getMapDeliveryToDto(DeliveryEntity deliveryEntity) {
+		 	DeliveryCreateDTO deliveryDto=new DeliveryCreateDTO();
+	        
+	        deliveryDto.setDeliveryId(deliveryEntity.getDeliveryId().toString());
+	        deliveryDto.setDeliveryname(deliveryEntity.getDeliveryname());
+	        deliveryDto.setFirstName(deliveryEntity.getFirstName());
+	        deliveryDto.setLastName(deliveryEntity.getLastName());
+	        deliveryDto.setPhone(deliveryEntity.getPhone());
+	        deliveryDto.setPassword(deliveryEntity.getPassword());
+	        deliveryDto.setModified_By(deliveryEntity.getModifiedBy());
+	        deliveryDto.setCreatedTimestamp(deliveryEntity.getCreatedTimestamp());
+	        deliveryDto.setUpdatedTimestamp(deliveryEntity.getUpdatedTimestamp());       
+	                
+	        return deliveryDto;
+	    }
+
+	@Override
+	public Page<DeliveryCreateDTO> searchDeliveries(SearchRequest searchRequest, Pageable pageable) {
+		List<DeliveryEntity> filteredDeliveries = DeliveryCreateDao.findAll().stream().filter(delivery->deliveryMatcherCriteria(delivery, searchRequest.getServices())).collect(Collectors.toList());
+		 int start = (int) pageable.getOffset();
+	     int end = Math.min((start + pageable.getPageSize()), filteredDeliveries.size());
+	     List<DeliveryCreateDTO> paginatedList = filteredDeliveries.subList(start, end).stream().map(delivery->convertToDTo(delivery)).collect(Collectors.toList());
+		return new PageImpl<>(paginatedList,pageable,filteredDeliveries.size());
+	}
+	private DeliveryCreateDTO convertToDTo(DeliveryEntity delivery) {
+		DeliveryCreateDTO deliveriesDto = new DeliveryCreateDTO();
+		deliveriesDto.setDeliveryId(delivery.getDeliveryId().toString());
+		deliveriesDto.setDeliveryname(delivery.getDeliveryname());
+		deliveriesDto.setFirstName(delivery.getFirstName());
+		deliveriesDto.setLastName(delivery.getLastName());
+		deliveriesDto.setPhone(delivery.getPhone());
+		deliveriesDto.setPassword(delivery.getPassword());
+		deliveriesDto.setCreatedTimestamp(delivery.getCreatedTimestamp());
+		deliveriesDto.setUpdatedTimestamp(delivery.getUpdatedTimestamp());
+		return null;
+	}
+
+	private boolean deliveryMatcherCriteria(DeliveryEntity delivery,List<DeliveryDTO> list) {
+		return true;
+	}
 }

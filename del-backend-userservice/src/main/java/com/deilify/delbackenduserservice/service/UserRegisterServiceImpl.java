@@ -22,11 +22,11 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 	@Autowired
 	UserCreateDao userCreateDao;
 	
-	@Autowired
-	UserKafkaProducer userKafkaProducer;
-	
-	@Autowired
-	AwsSNSClient awsSNSClient;
+//	@Autowired
+//	UserKafkaProducer userKafkaProducer;
+//	
+//	@Autowired
+//	AwsSNSClient awsSNSClient;
 
 	public UserCreateDTO createUser(UserDTO user) {
 		if (user.getUsername() != null) {
@@ -48,6 +48,7 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 				sampleKafkaDto.setMobileNumber("8013341617");
 				sampleKafkaDto.setEmailAddress("rajojyoti87@gmail.com");
 				
+				UserKafkaProducer userKafkaProducer = new UserKafkaProducer();
 				userKafkaProducer.messageBuilder(sampleKafkaDto);
 				System.out.println("User has been successfully registered");
 				return mapUserToDto(user);
@@ -144,6 +145,7 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 					entity.setMobileNumber(dto.getMobileNumber());
 				}
 				userCreateDao.save(entity);
+				AwsSNSClient awsSNSClient = new AwsSNSClient();
 				Boolean success = awsSNSClient.subscribeMobile(dto.getMobileNumber());
 				if(success) {
 					Random random = new Random();

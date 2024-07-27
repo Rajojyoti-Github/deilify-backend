@@ -11,6 +11,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.deilify.delbackenduserservice.dto.SampleKafkaDto;
@@ -18,7 +19,7 @@ import com.deilify.delbackenduserservice.util.ConstantUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-@Service
+
 public class UserKafkaProducer {
 	
 

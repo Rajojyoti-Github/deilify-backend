@@ -52,6 +52,6 @@ print_service_logs() {
 
 echo "Running docker compose up..."
 docker compose up -d
-sleep 10
+sleep 15
 restart_exited_services
 print_service_logs

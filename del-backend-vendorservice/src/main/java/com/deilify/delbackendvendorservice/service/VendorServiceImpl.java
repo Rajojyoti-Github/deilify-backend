@@ -161,7 +161,7 @@ public class VendorServiceImpl implements VendorService {
 			paymentEntity.setBankAccountNumber(vendorDto.getBankAccountNumber());
 			paymentEntity.setBankName(vendorDto.getBankName());
 			paymentEntity.setBeneficiaryName(vendorDto.getBeneficiaryName());
-			paymentEntity.setIfscNumber(vendorDto.getIfscNumber());
+			paymentEntity.setIfscCode(vendorDto.getIfscNumber());
 			paymentEntity.setUpiId(vendorDto.getUpiId());
 		}
 		vendorPaymentDao.save(paymentEntity);
@@ -196,7 +196,7 @@ public class VendorServiceImpl implements VendorService {
 			paymentUpdateDTO.setBankAccountNumber(vendorDto.getBankAccountNumber());
 			paymentUpdateDTO.setBankName(vendorDto.getBankName());
 			paymentUpdateDTO.setBeneficiaryName(vendorDto.getBeneficiaryName());
-			paymentUpdateDTO.setIfscNumber(vendorDto.getIfscNumber());
+			paymentUpdateDTO.setIfscCode(vendorDto.getIfscNumber());
 			paymentUpdateDTO.setUpiId(vendorDto.getUpiId());
 		}
 		vendorPaymentDao.save(paymentUpdateDTO);

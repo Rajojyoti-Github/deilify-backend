@@ -213,10 +213,10 @@ public class VendorServiceImpl implements VendorService {
 		if (entity != null) {
 			servicesEntity.setVendorId(services.getVendorId());
 			servicesEntity.setNameOfVendor(services.getNameOfVendor());
-			servicesEntity.setCategory(String.join(",", services.getCategory()));
+			servicesEntity.setCategory(services.getCategory());
 			servicesEntity.setVendorStoreId(services.getVendorStoreId());
-			servicesEntity.setSubCategory(String.join(",", services.getSubCategory()));
-			servicesEntity.setServiceLine(String.join(",", services.getServiceLine()));
+			servicesEntity.setSubCategory(services.getSubCategory());
+			servicesEntity.setServiceLine(services.getServiceLine());
 			servicesEntity.setPrice(services.getPrice());
 			servicesEntity.setCreatedTimestamp(LocalDateTime.now());
 			servicesEntity.setUpdatedTimestamp(LocalDateTime.now());
@@ -232,10 +232,10 @@ public class VendorServiceImpl implements VendorService {
 		servicesDto.setId(servicesEntity.getId());
 		servicesDto.setVendorId(servicesEntity.getVendorId());
 		servicesDto.setNameOfVendor(servicesEntity.getNameOfVendor());
-		servicesDto.setCategory(Arrays.stream(servicesEntity.getCategory().split(",")).collect(Collectors.toList()));
+		servicesDto.setCategory(servicesEntity.getCategory());
 		servicesDto.setVendorStoreId(servicesEntity.getVendorStoreId());
-		servicesDto.setSubCategory(Arrays.stream(servicesEntity.getSubCategory().split(",")).collect(Collectors.toList()));
-		servicesDto.setServiceLine(Arrays.stream(servicesEntity.getServiceLine().split(",")).collect(Collectors.toList()));
+		servicesDto.setSubCategory(servicesEntity.getSubCategory());
+		servicesDto.setServiceLine(servicesEntity.getServiceLine());
 		servicesDto.setPrice(servicesEntity.getPrice());
 		servicesDto.setCreatedTimestamp(LocalDateTime.now());
 		servicesDto.setUpdatedTimestamp(LocalDateTime.now());
@@ -255,10 +255,10 @@ public class VendorServiceImpl implements VendorService {
         servicesDto.setId(servicesEntity.getId());
         servicesDto.setVendorId(servicesEntity.getVendorId());
         servicesDto.setNameOfVendor(servicesEntity.getNameOfVendor());
-        servicesDto.setCategory(Arrays.stream(servicesEntity.getCategory().split(",")).collect(Collectors.toList()));
+        servicesDto.setCategory(servicesEntity.getCategory());
         servicesDto.setVendorStoreId(servicesEntity.getVendorStoreId());
-        servicesDto.setSubCategory(Arrays.stream(servicesEntity.getSubCategory().split(",")).collect(Collectors.toList()));
-        servicesDto.setServiceLine(Arrays.stream(servicesEntity.getServiceLine().split(",")).collect(Collectors.toList()));
+        servicesDto.setSubCategory(servicesEntity.getSubCategory());
+        servicesDto.setServiceLine(servicesEntity.getServiceLine());
         servicesDto.setPrice(servicesEntity.getPrice());
         servicesDto.setCreatedTimestamp(servicesEntity.getCreatedTimestamp());
         servicesDto.setUpdatedTimestamp(servicesEntity.getUpdatedTimestamp());
@@ -299,10 +299,10 @@ public class VendorServiceImpl implements VendorService {
         servicesDto.setId(servicesEntity.getId());
         servicesDto.setVendorId(servicesEntity.getVendorId());
         servicesDto.setNameOfVendor(servicesEntity.getNameOfVendor());
-        servicesDto.setCategory(Arrays.stream(servicesEntity.getCategory().split(",")).collect(Collectors.toList()));
+        servicesDto.setCategory(servicesEntity.getCategory());
         servicesDto.setVendorStoreId(servicesEntity.getVendorStoreId());
-        servicesDto.setSubCategory(Arrays.stream(servicesEntity.getSubCategory().split(",")).collect(Collectors.toList()));
-        servicesDto.setServiceLine(Arrays.stream(servicesEntity.getServiceLine().split(",")).collect(Collectors.toList()));
+        servicesDto.setSubCategory(servicesEntity.getSubCategory());
+        servicesDto.setServiceLine(servicesEntity.getServiceLine());
         servicesDto.setPrice(servicesEntity.getPrice());
         servicesDto.setCreatedTimestamp(servicesEntity.getCreatedTimestamp());
         servicesDto.setUpdatedTimestamp(servicesEntity.getUpdatedTimestamp());

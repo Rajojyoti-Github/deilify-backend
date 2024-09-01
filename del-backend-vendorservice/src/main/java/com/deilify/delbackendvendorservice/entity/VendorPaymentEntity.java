@@ -33,8 +33,8 @@ public class VendorPaymentEntity {
 	@Column(name = "account_number")
 	private String bankAccountNumber;
 	
-	@Column(name = "ifsc_number")
-	private String ifscNumber;
+	@Column(name = "ifsc_code")
+	private String ifscCode;
 	
 	@Column(name = "upi_id")
 	private String upiId;
@@ -99,12 +99,12 @@ public class VendorPaymentEntity {
 		this.bankAccountNumber = bankAccountNumber;
 	}
 
-	public String getIfscNumber() {
-		return ifscNumber;
+	public String getIfscCode() {
+		return ifscCode;
 	}
 
-	public void setIfscNumber(String ifscNumber) {
-		this.ifscNumber = ifscNumber;
+	public void setIfscCode(String ifscCode) {
+		this.ifscCode = ifscCode;
 	}
 
 	public String getUpiId() {
@@ -116,7 +116,7 @@ public class VendorPaymentEntity {
 	}
 
 	public VendorPaymentEntity(Integer id, Integer vendorEntityId, String accountHolderName, String bankName,
-			String beneficiaryName, String bankAccountNumber, String ifscNumber, String upiId,
+			String beneficiaryName, String bankAccountNumber, String ifscCode, String upiId,
 			VendorEntity vendorEntity) {
 		super();
 		this.id = id;
@@ -125,7 +125,7 @@ public class VendorPaymentEntity {
 		this.bankName = bankName;
 		this.beneficiaryName = beneficiaryName;
 		this.bankAccountNumber = bankAccountNumber;
-		this.ifscNumber = ifscNumber;
+		this.ifscCode = ifscCode;
 		this.upiId = upiId;
 	}
 
@@ -137,7 +137,7 @@ public class VendorPaymentEntity {
 	public String toString() {
 		return "VendorPaymentEntity [id=" + id + ", vendorEntityId=" + vendorEntityId + ", accountHolderName="
 				+ accountHolderName + ", bankName=" + bankName + ", beneficiaryName=" + beneficiaryName
-				+ ", bankAccountNumber=" + bankAccountNumber + ", ifscNumber=" + ifscNumber + ", upiId=" + upiId
+				+ ", bankAccountNumber=" + bankAccountNumber + ", ifscCode=" + ifscCode + ", upiId=" + upiId
 				+ "]";
 	}
 

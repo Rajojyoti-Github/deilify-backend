@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.deilify.delbackendvendorservice.dto.BankAccountDTO;
+import com.deilify.delbackendvendorservice.dto.RegisterVendorMobileDTO;
 import com.deilify.delbackendvendorservice.dto.SearchCriteria;
 import com.deilify.delbackendvendorservice.dto.ServicesCreateDTO;
 import com.deilify.delbackendvendorservice.dto.ServicesDTO;
@@ -30,5 +31,9 @@ public interface VendorService {
     void deleteVendorById(Integer id);
 
     Page<ServicesCreateDTO> searchServices(SearchCriteria searchCriteria, Pageable pageable);
+    
+    RegisterVendorMobileDTO registerVendorMobile(RegisterVendorMobileDTO dto);
+
+	RegisterVendorMobileDTO verifyOtp(RegisterVendorMobileDTO dto);
 
 }

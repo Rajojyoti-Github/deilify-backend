@@ -12,13 +12,13 @@ public class ServicesDTO {
 
 	private String nameOfVendor;
 
-	private List<String> category;
+	private String category;
 
 	private String vendorStoreId;
 
-	private List<String> subCategory;
+	private String subCategory;
 
-	private List<String> serviceLine;
+	private String serviceLine;
 
 	private BigDecimal price;
 
@@ -50,11 +50,11 @@ public class ServicesDTO {
 		this.nameOfVendor = nameOfVendor;
 	}
 
-	public List<String> getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(List<String> category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
@@ -66,19 +66,19 @@ public class ServicesDTO {
 		this.vendorStoreId = vendorStoreId;
 	}
 
-	public List<String> getSubCategory() {
+	public String getSubCategory() {
 		return subCategory;
 	}
 
-	public void setSubCategory(List<String> subCategory) {
+	public void setSubCategory(String subCategory) {
 		this.subCategory = subCategory;
 	}
 
-	public List<String> getServiceLine() {
+	public String getServiceLine() {
 		return serviceLine;
 	}
 
-	public void setServiceLine(List<String> serviceLine) {
+	public void setServiceLine(String serviceLine) {
 		this.serviceLine = serviceLine;
 	}
 
@@ -106,8 +106,13 @@ public class ServicesDTO {
 		this.updatedTimestamp = updatedTimestamp;
 	}
 
-	public ServicesDTO(Long id, Integer vendorId, String nameOfVendor, List<String> category, String vendorStoreId,
-			List<String> subCategory, List<String> serviceLine, BigDecimal price, LocalDateTime createdTimestamp,
+	public ServicesDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ServicesDTO(Long id, Integer vendorId, String nameOfVendor, String category, String vendorStoreId,
+			String subCategory, String serviceLine, BigDecimal price, LocalDateTime createdTimestamp,
 			LocalDateTime updatedTimestamp) {
 		super();
 		this.id = id;
@@ -122,10 +127,6 @@ public class ServicesDTO {
 		this.updatedTimestamp = updatedTimestamp;
 	}
 
-	public ServicesDTO() {
-		super();
-	}
-
 	@Override
 	public String toString() {
 		return "ServicesDTO [id=" + id + ", vendorId=" + vendorId + ", nameOfVendor=" + nameOfVendor + ", category="
@@ -133,4 +134,5 @@ public class ServicesDTO {
 				+ serviceLine + ", price=" + price + ", createdTimestamp=" + createdTimestamp + ", updatedTimestamp="
 				+ updatedTimestamp + "]";
 	}
+	
 }

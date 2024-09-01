@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.deilify.delbackendvendorservice.dto.BankAccountDTO;
 import com.deilify.delbackendvendorservice.dto.CustomResponse;
+import com.deilify.delbackendvendorservice.dto.RegisterVendorMobileDTO;
 import com.deilify.delbackendvendorservice.dto.SearchCriteria;
 import com.deilify.delbackendvendorservice.dto.ServicesCreateDTO;
 import com.deilify.delbackendvendorservice.dto.ServicesDTO;
@@ -36,6 +37,16 @@ public class VendorController {
 	
 	@Autowired
 	VendorService vendorService;
+	
+	@PostMapping(value = "/registerVendorMobileNumber")
+	public ResponseEntity<RegisterVendorMobileDTO> registerMobile(@RequestBody RegisterVendorMobileDTO dto){
+		return new ResponseEntity<>(vendorService.registerVendorMobile(dto), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/verifyOtpForVendor")
+	public ResponseEntity<RegisterVendorMobileDTO> verifyOtpForVendor(@RequestBody RegisterVendorMobileDTO dto){
+		return new ResponseEntity<>(vendorService.verifyOtp(dto), HttpStatus.OK);
+	}
 	
 	@PostMapping(value = "/registerVendor")
 	public ResponseEntity<VendorCreateDTO> registerVendor (@RequestBody VendorDTO vendor ){

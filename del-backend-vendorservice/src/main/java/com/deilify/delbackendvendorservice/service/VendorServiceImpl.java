@@ -48,8 +48,8 @@ public class VendorServiceImpl implements VendorService {
 	@Autowired
 	OtpEntityDao otpEntityDao;
 	
-	@Autowired
-	AwsSNSClient awsSNSClientVendor;
+//	@Autowired
+//	AwsSNSClient awsSNSClientVendor;
 
 	public VendorCreateDTO createVendor(VendorDTO vendorDto) {
 		VendorEntity vendorEntity = new VendorEntity();
@@ -314,6 +314,7 @@ public class VendorServiceImpl implements VendorService {
 	public RegisterVendorMobileDTO registerVendorMobile(RegisterVendorMobileDTO dto) {
 		RegisterVendorMobileDTO vendorMap = new RegisterVendorMobileDTO();
 		if(dto != null) {
+			AwsSNSClient awsSNSClientVendor = new AwsSNSClient();
 				Boolean success = awsSNSClientVendor.subscribeMobile(dto.getMobileNumber());
 				if(success) {
 					Random random = new Random();

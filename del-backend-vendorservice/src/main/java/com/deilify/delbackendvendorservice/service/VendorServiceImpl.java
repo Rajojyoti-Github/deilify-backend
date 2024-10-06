@@ -371,6 +371,7 @@ public class VendorServiceImpl implements VendorService {
 					} else {
 						vendorDto = mapEntityToVendor(getVendor);
 					}
+					otpEntityDao.delete(otpEntity);
 				} else {
 					throw new InvalidOtpFoundException("Invalid otp found");
 				}

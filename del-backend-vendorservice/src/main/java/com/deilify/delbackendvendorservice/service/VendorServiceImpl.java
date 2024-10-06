@@ -30,6 +30,7 @@ import com.deilify.delbackendvendorservice.entity.OtpEntity;
 import com.deilify.delbackendvendorservice.entity.ServicesEntity;
 import com.deilify.delbackendvendorservice.entity.VendorEntity;
 import com.deilify.delbackendvendorservice.entity.VendorPaymentEntity;
+import com.deilify.delbackendvendorservice.exception.InvalidOtpFoundException;
 import com.deilify.delbackendvendorservice.exception.VendorNotFoundException;
 import com.deilify.delbackendvendorservice.util.AwsSNSClient;
 
@@ -48,8 +49,8 @@ public class VendorServiceImpl implements VendorService {
 	@Autowired
 	OtpEntityDao otpEntityDao;
 	
-//	@Autowired
-//	AwsSNSClient awsSNSClientVendor;
+	@Autowired
+	AwsSNSClient awsSNSClientVendor;
 
 	public VendorCreateDTO createVendor(VendorDTO vendorDto) {
 		VendorEntity vendorEntity = new VendorEntity();
@@ -314,7 +315,7 @@ public class VendorServiceImpl implements VendorService {
 	public RegisterVendorMobileDTO registerVendorMobile(RegisterVendorMobileDTO dto) {
 		RegisterVendorMobileDTO vendorMap = new RegisterVendorMobileDTO();
 		if(dto != null) {
-			AwsSNSClient awsSNSClientVendor = new AwsSNSClient();
+//			AwsSNSClient awsSNSClientVendor = new AwsSNSClient();
 				Boolean success = awsSNSClientVendor.subscribeMobile(dto.getMobileNumber());
 				if(success) {
 					Random random = new Random();
@@ -360,13 +361,20 @@ public class VendorServiceImpl implements VendorService {
 			
 			OtpEntity otpEntity = otpEntityDao.getEntryByMobile(dto.getMobileNumber());
 			if(otpEntity != null) {
-				VendorEntity getVendor = vendorDao.findByVendorPhoneNumber(dto.getMobileNumber());
-				if(getVendor == null) {
-					VendorEntity getVendorNewEntity = new VendorEntity();
-					getVendorNewEntity.setPhoneNumber(dto.getMobileNumber());
-					VendorEntity entity = vendorDao.save(getVendorNewEntity);
-					vendorDto = mapEntityToVendor(entity);
+				if(dto.getOtp().equalsIgnoreCase(otpEntity.getOtp())) {
+					VendorEntity getVendor = vendorDao.findByVendorPhoneNumber(dto.getMobileNumber());
+					if(getVendor == null) {
+						VendorEntity getVendorNewEntity = new VendorEntity();
+						getVendorNewEntity.setPhoneNumber(dto.getMobileNumber());
+						VendorEntity entity = vendorDao.save(getVendorNewEntity);
+						vendorDto = mapEntityToVendor(entity);
+					} else {
+						vendorDto = mapEntityToVendor(getVendor);
+					}
+				} else {
+					throw new InvalidOtpFoundException("Invalid otp found");
 				}
+				
 			}
 		}
 		return vendorDto;

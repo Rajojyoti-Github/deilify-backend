@@ -182,6 +182,7 @@ public class VendorServiceImpl implements VendorService {
 		paymentDto.setBeneficiaryName(vendorDto.getBeneficiaryName());
 		paymentDto.setIfscCode(vendorDto.getIfscCode());
 		paymentDto.setUpiId(vendorDto.getUpiId());
+		paymentDto.setStatus("Success");
 		return paymentDto;
 	}
 

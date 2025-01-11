@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import jakarta.persistence.Id;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -62,8 +63,8 @@ public class VendorEntity {
 	@OneToOne(mappedBy = "vendorEntity")
     private VendorRegisteredAddressEnitity registeredAddresses;
 	
-	@OneToOne(mappedBy = "vendorEntity")
-    private ServicesEntity serviceLine;
+	@OneToMany(mappedBy = "vendorEntity", cascade = CascadeType.ALL)
+    private List<ServicesEntity> serviceEntities;
 	
 	@OneToOne(mappedBy = "vendorEntity")
     private VendorPaymentEntity paymentAddresses;

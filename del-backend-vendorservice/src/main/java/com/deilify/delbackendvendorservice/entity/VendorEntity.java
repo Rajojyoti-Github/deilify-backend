@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -61,13 +62,13 @@ public class VendorEntity {
     private List<VendorStoreAddressEnitity> storeAddresses;
 
 	@OneToOne(mappedBy = "vendorEntity")
-    private VendorRegisteredAddressEnitity registeredAddresses;
+    private List<VendorRegisteredAddressEnitity> registeredAddresses;
 	
 	@OneToMany(mappedBy = "vendorEntity", cascade = CascadeType.ALL)
     private List<ServicesEntity> serviceEntities;
 	
-	@OneToOne(mappedBy = "vendorEntity")
-    private VendorPaymentEntity paymentAddresses;
+	@OneToMany(mappedBy = "vendorEntity", cascade = CascadeType.ALL)
+    private List<VendorPaymentEntity> paymentAddresses;
 
 	public Integer getId() {
 		return id;
@@ -173,27 +174,27 @@ public class VendorEntity {
 		this.storeAddresses = storeAddresses;
 	}
 
-	public VendorRegisteredAddressEnitity getRegisteredAddresses() {
+	public List<VendorRegisteredAddressEnitity> getRegisteredAddresses() {
 		return registeredAddresses;
 	}
 
-	public void setRegisteredAddresses(VendorRegisteredAddressEnitity registeredAddresses) {
+	public void setRegisteredAddresses(List<VendorRegisteredAddressEnitity> registeredAddresses) {
 		this.registeredAddresses = registeredAddresses;
 	}
 
-	public VendorPaymentEntity getPaymentAddresses() {
+	public List<VendorPaymentEntity> getPaymentAddresses() {
 		return paymentAddresses;
 	}
 
-	public void setPaymentAddresses(VendorPaymentEntity paymentAddresses) {
+	public void setPaymentAddresses(List<VendorPaymentEntity> paymentAddresses) {
 		this.paymentAddresses = paymentAddresses;
 	}
 
 	public VendorEntity(Integer id, String nameOfVendor, String nameOfBusiness, String address, String phoneNumber,
 			String emailAddress, Integer tradeLicenseNumber, LocalDate tradeLicenceValidityDate, Integer gstNumber,
 			LocalDate createdTimestamp, LocalDate updatedTimestamp, String modifiedBy,
-			List<VendorStoreAddressEnitity> storeAddresses, VendorRegisteredAddressEnitity registeredAddresses,
-			VendorPaymentEntity paymentAddresses) {
+			List<VendorStoreAddressEnitity> storeAddresses, List<VendorRegisteredAddressEnitity> registeredAddresses,
+			List<VendorPaymentEntity> paymentAddresses) {
 		super();
 		this.id = id;
 		this.nameOfVendor = nameOfVendor;

@@ -15,18 +15,12 @@ public class BankAccountDTO {
 	
 	private String beneficiaryName;
 	
-	private String ifscNumber;
+	private String ifscCode;
 	
 	private String upiId;
-
-	public Integer getVendorId() {
-		return vendorId;
-	}
-
-	public void setVendorId(Integer vendorId) {
-		this.vendorId = vendorId;
-	}
 	
+	private String status;
+
 	public Integer getPaymentId() {
 		return paymentId;
 	}
@@ -35,20 +29,20 @@ public class BankAccountDTO {
 		this.paymentId = paymentId;
 	}
 
+	public Integer getVendorId() {
+		return vendorId;
+	}
+
+	public void setVendorId(Integer vendorId) {
+		this.vendorId = vendorId;
+	}
+
 	public String getAccountHolderName() {
 		return accountHolderName;
 	}
 
 	public void setAccountHolderName(String accountHolderName) {
 		this.accountHolderName = accountHolderName;
-	}
-
-	public String getBankAccountNumber() {
-		return bankAccountNumber;
-	}
-
-	public void setBankAccountNumber(String bankAccountNumber) {
-		this.bankAccountNumber = bankAccountNumber;
 	}
 
 	public String getBankName() {
@@ -67,12 +61,20 @@ public class BankAccountDTO {
 		this.beneficiaryName = beneficiaryName;
 	}
 
-	public String getIfscNumber() {
-		return ifscNumber;
+	public String getBankAccountNumber() {
+		return bankAccountNumber;
 	}
 
-	public void setIfscNumber(String ifscNumber) {
-		this.ifscNumber = ifscNumber;
+	public void setBankAccountNumber(String bankAccountNumber) {
+		this.bankAccountNumber = bankAccountNumber;
+	}
+
+	public String getIfscCode() {
+		return ifscCode;
+	}
+
+	public void setIfscCode(String ifscCode) {
+		this.ifscCode = ifscCode;
 	}
 
 	public String getUpiId() {
@@ -83,27 +85,49 @@ public class BankAccountDTO {
 		this.upiId = upiId;
 	}
 
-	public BankAccountDTO(Integer paymentId, String accountHolderName, String bankAccountNumber, String bankName,
-			String beneficiaryName, String ifscNumber, String upiId) {
-		super();
-		this.paymentId = paymentId;
-		this.accountHolderName = accountHolderName;
-		this.bankAccountNumber = bankAccountNumber;
-		this.bankName = bankName;
-		this.beneficiaryName = beneficiaryName;
-		this.ifscNumber = ifscNumber;
-		this.upiId = upiId;
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public BankAccountDTO() {
 		super();
 	}
 
+	/**
+	 * @param paymentId
+	 * @param vendorId
+	 * @param accountHolderName
+	 * @param bankAccountNumber
+	 * @param bankName
+	 * @param beneficiaryName
+	 * @param ifscCode
+	 * @param upiId
+	 * @param status
+	 */
+	public BankAccountDTO(Integer paymentId, Integer vendorId, String accountHolderName, String bankAccountNumber,
+			String bankName, String beneficiaryName, String ifscCode, String upiId, String status) {
+		super();
+		this.paymentId = paymentId;
+		this.vendorId = vendorId;
+		this.accountHolderName = accountHolderName;
+		this.bankAccountNumber = bankAccountNumber;
+		this.bankName = bankName;
+		this.beneficiaryName = beneficiaryName;
+		this.ifscCode = ifscCode;
+		this.upiId = upiId;
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "PaymentDTO [paymentId=" + paymentId + ", accountHolderName=" + accountHolderName
-				+ ", bankAccountNumber=" + bankAccountNumber + ", bankName=" + bankName + ", beneficiaryName="
-				+ beneficiaryName + ", ifscNumber=" + ifscNumber + ", upiId=" + upiId + "]";
+		return "BankAccountDTO [paymentId=" + paymentId + ", vendorId=" + vendorId + ", accountHolderName="
+				+ accountHolderName + ", bankAccountNumber=" + bankAccountNumber + ", bankName=" + bankName
+				+ ", beneficiaryName=" + beneficiaryName + ", ifscCode=" + ifscCode + ", upiId=" + upiId + ", status="
+				+ status + "]";
 	}
 	
 }

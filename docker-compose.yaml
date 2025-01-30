@@ -18,7 +18,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "8081:8081"
+      - "8080:8080"
     depends_on:
       - mysql
     networks:
@@ -31,7 +31,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "8082:8082"
+      - "8081:8081"
     depends_on:
       - mysql
     networks:
@@ -44,7 +44,20 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "8083:8083"
+      - "8082:8082"
+    depends_on:
+      - mysql
+    networks:
+      - backend
+  
+  ordermanagementservice:
+    build: ./del-backend-ordermanagementservice
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/deilify
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8084:8084"
     depends_on:
       - mysql
     networks:

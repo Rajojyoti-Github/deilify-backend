@@ -14,17 +14,9 @@ public class VendorBankAccountDTO {
 	
 	private String bankAccountNumber;
 	
-	private String ifscNumber;
+	private String ifscCode;
 	
 	private String upiId;
-
-	public Integer getVendorId() {
-		return vendorId;
-	}
-
-	public void setVendorId(Integer vendorId) {
-		this.vendorId = vendorId;
-	}
 
 	public Integer getPaymentId() {
 		return paymentId;
@@ -32,6 +24,14 @@ public class VendorBankAccountDTO {
 
 	public void setPaymentId(Integer paymentId) {
 		this.paymentId = paymentId;
+	}
+
+	public Integer getVendorId() {
+		return vendorId;
+	}
+
+	public void setVendorId(Integer vendorId) {
+		this.vendorId = vendorId;
 	}
 
 	public String getAccountHolderName() {
@@ -66,12 +66,12 @@ public class VendorBankAccountDTO {
 		this.bankAccountNumber = bankAccountNumber;
 	}
 
-	public String getIfscNumber() {
-		return ifscNumber;
+	public String getIfscCode() {
+		return ifscCode;
 	}
 
-	public void setIfscNumber(String ifscNumber) {
-		this.ifscNumber = ifscNumber;
+	public void setIfscCode(String ifscCode) {
+		this.ifscCode = ifscCode;
 	}
 
 	public String getUpiId() {
@@ -82,27 +82,29 @@ public class VendorBankAccountDTO {
 		this.upiId = upiId;
 	}
 
-	public VendorBankAccountDTO(Integer paymentId, String accountHolderName, String bankName, String beneficiaryName,
-			String bankAccountNumber, String ifscNumber, String upiId) {
+	public VendorBankAccountDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public VendorBankAccountDTO(Integer paymentId, Integer vendorId, String accountHolderName, String bankName,
+			String beneficiaryName, String bankAccountNumber, String ifscCode, String upiId) {
 		super();
 		this.paymentId = paymentId;
+		this.vendorId = vendorId;
 		this.accountHolderName = accountHolderName;
 		this.bankName = bankName;
 		this.beneficiaryName = beneficiaryName;
 		this.bankAccountNumber = bankAccountNumber;
-		this.ifscNumber = ifscNumber;
+		this.ifscCode = ifscCode;
 		this.upiId = upiId;
-	}
-
-	public VendorBankAccountDTO() {
-		super();
 	}
 
 	@Override
 	public String toString() {
-		return "VendorPaymentDTO [paymentId=" + paymentId + ", accountHolderName=" + accountHolderName + ", bankName="
-				+ bankName + ", beneficiaryName=" + beneficiaryName + ", bankAccountNumber=" + bankAccountNumber
-				+ ", ifscNumber=" + ifscNumber + ", upiId=" + upiId + "]";
+		return "VendorBankAccountDTO [paymentId=" + paymentId + ", vendorId=" + vendorId + ", accountHolderName="
+				+ accountHolderName + ", bankName=" + bankName + ", beneficiaryName=" + beneficiaryName
+				+ ", bankAccountNumber=" + bankAccountNumber + ", ifscCode=" + ifscCode + ", upiId=" + upiId + "]";
 	}
-	
+
 }

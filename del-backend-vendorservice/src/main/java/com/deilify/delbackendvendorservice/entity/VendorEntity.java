@@ -61,7 +61,7 @@ public class VendorEntity {
 	@OneToMany(mappedBy = "vendorEntity")
     private List<VendorStoreAddressEnitity> storeAddresses;
 
-	@OneToOne(mappedBy = "vendorEntity")
+	@OneToMany(mappedBy = "vendorEntity")
     private List<VendorRegisteredAddressEnitity> registeredAddresses;
 	
 	@OneToMany(mappedBy = "vendorEntity", cascade = CascadeType.ALL)

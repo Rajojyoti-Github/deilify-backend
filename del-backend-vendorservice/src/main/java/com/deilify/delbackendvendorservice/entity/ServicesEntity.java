@@ -39,7 +39,7 @@ public class ServicesEntity {
 	@Column(name = "updated_timestamp")
     private LocalDateTime updatedTimestamp;
     
-    @OneToOne
+    @ManyToOne
 	@JoinColumn(name = "vendor_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private VendorEntity vendorEntity;
 

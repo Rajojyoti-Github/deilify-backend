@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -39,7 +40,7 @@ public class VendorPaymentEntity {
 	@Column(name = "upi_id")
 	private String upiId;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "vendor_entity_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private VendorEntity vendorEntity;
 

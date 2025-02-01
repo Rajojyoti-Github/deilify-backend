@@ -30,6 +30,7 @@ import com.deilify.delbackendvendorservice.entity.OtpEntity;
 import com.deilify.delbackendvendorservice.entity.ServicesEntity;
 import com.deilify.delbackendvendorservice.entity.VendorEntity;
 import com.deilify.delbackendvendorservice.entity.VendorPaymentEntity;
+import com.deilify.delbackendvendorservice.exception.InvalidOtpFoundException;
 import com.deilify.delbackendvendorservice.exception.VendorNotFoundException;
 import com.deilify.delbackendvendorservice.util.AwsSNSClient;
 
@@ -181,6 +182,7 @@ public class VendorServiceImpl implements VendorService {
 		paymentDto.setBeneficiaryName(vendorDto.getBeneficiaryName());
 		paymentDto.setIfscCode(vendorDto.getIfscCode());
 		paymentDto.setUpiId(vendorDto.getUpiId());
+		paymentDto.setStatus("Success");
 		return paymentDto;
 	}
 
@@ -314,11 +316,11 @@ public class VendorServiceImpl implements VendorService {
 	public RegisterVendorMobileDTO registerVendorMobile(RegisterVendorMobileDTO dto) {
 		RegisterVendorMobileDTO vendorMap = new RegisterVendorMobileDTO();
 		if(dto != null) {
+//			AwsSNSClient awsSNSClientVendor = new AwsSNSClient();
 				Boolean success = awsSNSClientVendor.subscribeMobile(dto.getMobileNumber());
 				if(success) {
 					Random random = new Random();
-					String id = String.format("%04d", random.nextInt(10000));
-					Integer otp = Integer.valueOf(id);
+					Integer otp = random.nextInt(9000) + 1000;
 					String message = otp + " is your OTP to validate your number with Deilify. Use this to login to your account and experience the new world of Laundry. Team Deilify";
 					awsSNSClientVendor.publishMessageToSNSTopic(message, dto.getMobileNumber());
 					
@@ -359,13 +361,21 @@ public class VendorServiceImpl implements VendorService {
 			
 			OtpEntity otpEntity = otpEntityDao.getEntryByMobile(dto.getMobileNumber());
 			if(otpEntity != null) {
-				VendorEntity getVendor = vendorDao.findByVendorPhoneNumber(dto.getMobileNumber());
-				if(getVendor == null) {
-					VendorEntity getVendorNewEntity = new VendorEntity();
-					getVendorNewEntity.setPhoneNumber(dto.getMobileNumber());
-					VendorEntity entity = vendorDao.save(getVendorNewEntity);
-					vendorDto = mapEntityToVendor(entity);
+				if(dto.getOtp().equalsIgnoreCase(otpEntity.getOtp())) {
+					VendorEntity getVendor = vendorDao.findByVendorPhoneNumber(dto.getMobileNumber());
+					if(getVendor == null) {
+						VendorEntity getVendorNewEntity = new VendorEntity();
+						getVendorNewEntity.setPhoneNumber(dto.getMobileNumber());
+						VendorEntity entity = vendorDao.save(getVendorNewEntity);
+						vendorDto = mapEntityToVendor(entity);
+					} else {
+						vendorDto = mapEntityToVendor(getVendor);
+					}
+					otpEntityDao.delete(otpEntity);
+				} else {
+					throw new InvalidOtpFoundException("Invalid otp found");
 				}
+				
 			}
 		}
 		return vendorDto;

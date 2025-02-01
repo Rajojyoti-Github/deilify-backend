@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.deilify.delbackendvendorservice", "com.deilify.delbackendvendorservice.util"})
-@PropertySource("classpath:application.properties")
+//@ComponentScan(basePackages = {"com.deilify.delbackendvendorservice", "com.deilify.delbackendvendorservice.util"})
+//@PropertySource("classpath:application.properties")
 public class DelBackendVendorserviceApplication {
 
 	public static void main(String[] args) {

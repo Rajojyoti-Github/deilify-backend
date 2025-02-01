@@ -61,7 +61,7 @@ public class AwsSNSClient {
 		AmazonSNSClient snsClient = (AmazonSNSClient) AmazonSNSClientBuilder
 				.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(awsCredentials()))
-				.withRegion(Regions.US_EAST_1)
+				.withRegion(Regions.AP_SOUTH_1)
 				.build();
 		return snsClient;
 	}

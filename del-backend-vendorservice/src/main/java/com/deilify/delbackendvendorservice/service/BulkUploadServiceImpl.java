@@ -34,7 +34,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 
 @Service
-public class ServiceControllerService {
+public class BulkUploadServiceImpl implements BulkUploadService{
 
 	@Autowired
 	VendorCreateDao vendorDao;
@@ -66,7 +66,11 @@ public class ServiceControllerService {
 				if (row.getRowNum() == 0)
 					continue; // Skip header
 
-				if (!row.getCell(2).getStringCellValue().trim().isEmpty()) {
+				if (row.getCell(0) != null && !row.getCell(0).getStringCellValue().trim().isEmpty() &&
+		                row.getCell(1) != null && !row.getCell(1).getStringCellValue().trim().isEmpty() &&
+		                row.getCell(2) != null && !row.getCell(2).getStringCellValue().trim().isEmpty() &&
+		                row.getCell(3) != null && row.getCell(3).getCellType() == org.apache.poi.ss.usermodel.CellType.NUMERIC &&
+		                row.getCell(3).getNumericCellValue() > 0) {
 
 					ServicesEntity service = new ServicesEntity();
 					service.setVendorId(vendorId);
@@ -87,7 +91,7 @@ public class ServiceControllerService {
 		servicesDao.saveAll(services);
 	}
 	
-	public ResponseEntity<Resource> downloadTemplate() throws IOException {
+	public ResponseEntity<Resource> downloadGenericTemplate() throws IOException {
         Path filePath;
         if ("aws".equalsIgnoreCase(environmentType)) {
             // Download from S3 if the environment is AWS

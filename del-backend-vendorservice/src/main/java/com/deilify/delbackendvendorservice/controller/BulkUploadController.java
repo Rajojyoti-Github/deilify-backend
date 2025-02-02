@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.deilify.delbackendvendorservice.service.ServiceControllerService;
+import com.deilify.delbackendvendorservice.service.BulkUploadServiceImpl;
 
 //Controller
 @RestController
 @RequestMapping("/api/files/bulkUpload")
-class ServiceController {
+class BulkUploadController {
 
 	@Autowired
-	ServiceControllerService serviceControllerService;
+	BulkUploadServiceImpl bulkUploadImpl;
     
 
 	@PostMapping("/ServiceUpload")
 	public ResponseEntity<String> uploadServiceFile(@RequestParam("file") MultipartFile file,
 			@RequestParam("vendor_id") Integer vendorId) {
 		try {
-			serviceControllerService.saveServicesFromExcel(file, vendorId);
+			bulkUploadImpl.saveServicesFromExcel(file, vendorId);
 			return ResponseEntity.ok("File uploaded and data inserted successfully");
 		} catch (MaxUploadSizeExceededException e) {
 			return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
@@ -38,9 +38,9 @@ class ServiceController {
 	}
 	
 	@GetMapping("/ServiceDownload")
-    public ResponseEntity<Resource> downloadTemplate() {
+    public ResponseEntity<Resource> downloadGenericTemplate() {
         try {
-            return serviceControllerService.downloadTemplate();
+            return bulkUploadImpl.downloadGenericTemplate();
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
